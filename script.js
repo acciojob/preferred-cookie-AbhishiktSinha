@@ -24,6 +24,8 @@ function applyCookieStyling() {
 		const fontcolor = fontcolorCookie.slice(fontcolorCookie.indexOf('=') + 1);
 		form.fontcolor.value = decodeURIComponent(fontcolor);
 	}
+
+    updatePage();
 }
 
 applyCookieStyling();
@@ -32,8 +34,27 @@ form.addEventListener('submit', (event)=> {
 
 	event.preventDefault();
     console.log('submit event');
-	document.cookie = `fontsize = ${form.fontsize.value}`;
-	document.cookie = `fontcolor = ${form.fontcolor.value}`;
+
+    updateCookies();
+    updatePage();
 })
+form.addEventListener('change', (event)=> {
+    console.log('change event');
+    
+    updateCookies();
+    updatePage();
+})
+
+
+function updateCookies() {
+    document.cookie = `fontsize = ${form.fontsize.value}`;
+	document.cookie = `fontcolor = ${form.fontcolor.value}`;
+}
+
+function updatePage() {
+    document.body.style.fontSize = `${form.fontsize.value}px`;
+    document.body.style.backgroundColor = `${form.fontcolor.value}`;
+    document.body.style.color = `${form.fontcolor.value}`;    
+}
 
 
